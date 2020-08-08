@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "412449982650",
+    "firebase_url": "https://signuptest-b5667.firebaseio.com",
+    "project_id": "signuptest-b5667",
+    "storage_bucket": "signuptest-b5667.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:412449982650:android:31db0d5fe308b06da95a83",
+        "android_client_info": {
+          "package_name": "com.example.singuptest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "412449982650-v90patafm1s6lm4a87rhe94ku41scufp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1FZ4xs_-kdgitYHppJTeTfU28gFYS8Rc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "412449982650-v90patafm1s6lm4a87rhe94ku41scufp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
