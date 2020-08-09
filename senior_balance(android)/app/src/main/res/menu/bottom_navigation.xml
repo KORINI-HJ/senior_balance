@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/select_home"
+        android:icon="@drawable/ic_baseline_add"
+        android:title="HOME"/>
+
+    <item
+        android:id="@+id/select_report"
+        android:icon="@drawable/ic_baseline_add"
+        android:title="REPORT"/>
+
+    <item
+        android:id="@+id/select_profile"
+        android:icon="@drawable/ic_baseline_add"
+        android:title="PROFILE"/>
+</menu>
