@@ -116,6 +116,10 @@ public abstract class CameraActivity extends AppCompatActivity
       requestPermission();
     }
 
+    recognitionTextView = findViewById(R.id.detected_item);
+    recognitionValueTextView = findViewById(R.id.detected_item_value);
+
+    /*
     threadsTextView = findViewById(R.id.threads);
     plusImageView = findViewById(R.id.plus);
     minusImageView = findViewById(R.id.minus);
@@ -125,7 +129,9 @@ public abstract class CameraActivity extends AppCompatActivity
     gestureLayout = findViewById(R.id.gesture_layout);
     sheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
     bottomSheetArrowImageView = findViewById(R.id.bottom_sheet_arrow);
+     */
 
+    /*
     ViewTreeObserver vto = gestureLayout.getViewTreeObserver();
     vto.addOnGlobalLayoutListener(
         new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -142,6 +148,7 @@ public abstract class CameraActivity extends AppCompatActivity
             sheetBehavior.setPeekHeight(height);
           }
         });
+
     sheetBehavior.setHideable(false);
 
     sheetBehavior.setBottomSheetCallback(
@@ -195,6 +202,7 @@ public abstract class CameraActivity extends AppCompatActivity
     model = Model.valueOf(modelSpinner.getSelectedItem().toString().toUpperCase());
     device = Device.valueOf(deviceSpinner.getSelectedItem().toString());
     numThreads = Integer.parseInt(threadsTextView.getText().toString().trim());
+     */
   }
 
   protected int[] getRgbBytes() {
@@ -552,6 +560,7 @@ public abstract class CameraActivity extends AppCompatActivity
       //Toast.makeText(this, "[" + recognition.getId() + "]", Toast.LENGTH_SHORT).show();
 
 
+      /*
       Recognition recognition1 = results.get(1);
       if (recognition1 != null) {
         if (recognition1.getTitle() != null) recognition1TextView.setText(recognition1.getTitle());
@@ -567,6 +576,7 @@ public abstract class CameraActivity extends AppCompatActivity
           recognition2ValueTextView.setText(
               String.format("%.2f", (100 * recognition2.getConfidence())) + "%");
       }
+       */
     }
   }
 
