@@ -119,6 +119,9 @@ public abstract class CameraActivity extends AppCompatActivity
     recognitionTextView = findViewById(R.id.detected_item);
     recognitionValueTextView = findViewById(R.id.detected_item_value);
 
+    setModel(Model.valueOf("Quantized_MobileNet".toUpperCase()));
+    //Toast.makeText(this, parent.getItemAtPosition(pos).toString().toUpperCase(), Toast.LENGTH_SHORT).show();;
+
     /*
     threadsTextView = findViewById(R.id.threads);
     plusImageView = findViewById(R.id.plus);
