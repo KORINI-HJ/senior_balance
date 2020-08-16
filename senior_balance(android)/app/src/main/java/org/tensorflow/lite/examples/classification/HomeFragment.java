@@ -54,6 +54,12 @@ public class HomeFragment extends Fragment {
         return fragment;
     }
 
+    public void call_pose_training(String str_model){
+        Intent intent = new Intent(context, ClassifierActivity.class);
+        intent.putExtra("model", str_model);
+        startActivity(intent);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,17 +67,35 @@ public class HomeFragment extends Fragment {
         View view = (View)inflater.inflate(R.layout.fragment_home, container, false);
         context = getActivity();
 
-        Button button_sit = (Button)view.findViewById(R.id.workout_sit); // button id로 연결
+        Button button_sit = (Button)view.findViewById(R.id.workout_sit);
+        Button button_stand = (Button)view.findViewById(R.id.workout_stand);
+        Button button_lay = (Button)view.findViewById(R.id.workout_lay);
+        Button button_tool = (Button)view.findViewById(R.id.workout_tool);
+
         button_sit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ClassifierActivity.class);
-                startActivity(intent);
-                //
+                call_pose_training("sit");
             }
         });
-
-
+        button_stand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                call_pose_training("stand");
+            }
+        });
+        button_lay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                call_pose_training("lay");
+            }
+        });
+        button_tool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                call_pose_training("tool");
+            }
+        });
         return view;
     }
 

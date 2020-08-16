@@ -19,6 +19,7 @@ package org.tensorflow.lite.examples.classification;
 import android.Manifest;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
@@ -119,8 +120,26 @@ public abstract class CameraActivity extends AppCompatActivity
     recognitionTextView = findViewById(R.id.detected_item);
     recognitionValueTextView = findViewById(R.id.detected_item_value);
 
-    setModel(Model.valueOf("Quantized_MobileNet".toUpperCase()));
-    //Toast.makeText(this, parent.getItemAtPosition(pos).toString().toUpperCase(), Toast.LENGTH_SHORT).show();;
+    Intent intent = getIntent();
+    String str_model = intent.getExtras().getString("model");
+    Toast.makeText(this, str_model, Toast.LENGTH_SHORT).show();
+
+    switch(str_model)
+    {
+      case "sit":
+        setModel(Model.valueOf("Float_EfficientNet".toUpperCase()));
+        break;
+      case "stand":
+        setModel(Model.valueOf("Float_MobileNet".toUpperCase()));
+        break;
+      case "lay":
+        setModel(Model.valueOf("Quantized_EfficientNet".toUpperCase()));
+        break;
+      case "tool":
+        setModel(Model.valueOf("Quantized_MobileNet".toUpperCase()));
+        break;
+      default:
+    }
 
     /*
     threadsTextView = findViewById(R.id.threads);
