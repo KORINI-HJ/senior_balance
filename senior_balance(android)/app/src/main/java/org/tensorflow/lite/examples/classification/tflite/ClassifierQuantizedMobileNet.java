@@ -52,12 +52,12 @@ public class ClassifierQuantizedMobileNet extends Classifier {
     // you can download this file from
     // see build.gradle for where to obtain this file. It should be auto
     // downloaded into assets.
-    return "up/model.tflite";
+    return "tool/model.tflite";
   }
 
   @Override
   protected String getLabelPath() {
-    return "up/labels.txt";
+    return "tool/labels.txt";
   }
 
   @Override

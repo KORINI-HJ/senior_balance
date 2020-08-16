@@ -111,6 +111,8 @@ public abstract class Classifier {
    */
   public static Classifier create(Activity activity, Model model, Device device, int numThreads)
       throws IOException {
+    //return new ClassifierFloatMobileNet(activity, device, numThreads);
+
     if (model == Model.QUANTIZED_MOBILENET) {
       return new ClassifierQuantizedMobileNet(activity, device, numThreads);
     } else if (model == Model.FLOAT_MOBILENET) {
