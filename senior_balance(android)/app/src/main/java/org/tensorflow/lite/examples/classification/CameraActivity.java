@@ -30,6 +30,7 @@ import android.media.Image;
 import android.media.Image.Plane;
 import android.media.ImageReader;
 import android.media.ImageReader.OnImageAvailableListener;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -99,9 +100,23 @@ public abstract class CameraActivity extends AppCompatActivity
   private Spinner deviceSpinner;
   private TextView threadsTextView;
 
+  String str_model = null;
   private Model model = Model.QUANTIZED_EFFICIENTNET;
   private Device device = Device.CPU;
   private int numThreads = -1;
+  MediaPlayer mediaPlayer;
+
+  int[] count_media_array = { R.raw.count_1, R.raw.count_2, R.raw.count_3, R.raw.count_4, R.raw.count_5, R.raw.count_6, R.raw.count_7, R.raw.count_8, R.raw.count_9, R.raw.count_10};
+  public String getStr_model()
+  {
+    return str_model;
+  }
+
+  public void speakCount(int i)
+  {
+    mediaPlayer = MediaPlayer.create(this, count_media_array[i]);
+    mediaPlayer.start();
+  }
 
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
@@ -121,8 +136,7 @@ public abstract class CameraActivity extends AppCompatActivity
     recognitionValueTextView = findViewById(R.id.detected_item_value);
 
     Intent intent = getIntent();
-    String str_model = intent.getExtras().getString("model");
-    Toast.makeText(this, str_model, Toast.LENGTH_SHORT).show();
+    str_model = intent.getExtras().getString("model");
 
     switch(str_model)
     {
@@ -558,13 +572,11 @@ public abstract class CameraActivity extends AppCompatActivity
       Recognition recognition = results.get(0);
       if (recognition != null)
       {
-        if (recognition.getTitle() != null) recognitionTextView.setText(recognition.getTitle());
-        /*
-        if (recognition.getConfidence() != null)
-          recognitionValueTextView.setText(
-              String.format("%.2f", (100 * recognition.getConfidence())) + "%");
-         */
-        if(recognition.getTitle().equals("0 Stand") && recognition.getConfidence() > 0.8)
+        if (recognition.getTitle() != null && recognition.getConfidence() != null)
+        {
+          recognitionTextView.setText(recognition.getTitle() + "\n" + String.format("%.2f", (100 * recognition.getConfidence())) + "%");
+        }
+        if(recognition.getTitle().equals("0 Stand") && recognition.getConfidence() > 0.9)
         {
           if(state == 1)
           {
@@ -580,8 +592,6 @@ public abstract class CameraActivity extends AppCompatActivity
       }
 
       //Toast.makeText(this, "[" + recognition.getId() + "]", Toast.LENGTH_SHORT).show();
-
-
       /*
       Recognition recognition1 = results.get(1);
       if (recognition1 != null) {
@@ -590,7 +600,6 @@ public abstract class CameraActivity extends AppCompatActivity
           recognition1ValueTextView.setText(
               String.format("%.2f", (100 * recognition1.getConfidence())) + "%");
       }
-
       Recognition recognition2 = results.get(2);
       if (recognition2 != null) {
         if (recognition2.getTitle() != null) recognition2TextView.setText(recognition2.getTitle());
@@ -601,6 +610,43 @@ public abstract class CameraActivity extends AppCompatActivity
        */
     }
   }
+
+  int time_count_stand = 0;
+  int state_stand = 0;
+  @UiThread
+  protected void showResultStand(List<Recognition> results) {
+      if (results != null && results.size() >= 3)
+      {
+          Recognition recognition = results.get(0);
+          if (recognition != null)
+          {
+              if (recognition.getTitle() != null && recognition.getConfidence() != null)
+              {
+                  recognitionTextView.setText(recognition.getTitle() + "\n" + String.format("%.2f", (100 * recognition.getConfidence())) + "%");
+                  recognitionValueTextView.setText(Integer.toString(time_count_stand) + "초");
+              }
+              if (recognition.getTitle().equals("0 Stand") && recognition.getConfidence() > 0.9)
+              {
+                  state_stand = 0;
+              }
+              else if (recognition.getTitle().equals("1 Up") && recognition.getConfidence() > 0.8)
+              {
+                  if(state_stand == 1)
+                  {
+                    time_count_stand++;
+                    recognitionValueTextView.setText(Integer.toString(time_count_stand) + "초");
+                    speakCount(time_count_stand - 1);
+                  }
+                  state_stand = 1;
+              }
+              else
+              {
+                  // 똑바로 하세요
+              }
+          }
+      }
+  }
+
 
   protected void showFrameInfo(String frameInfo) {
     frameValueTextView.setText(frameInfo);

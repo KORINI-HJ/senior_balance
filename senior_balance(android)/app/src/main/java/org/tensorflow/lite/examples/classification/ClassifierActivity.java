@@ -41,6 +41,8 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
   private Integer sensorOrientation;
   private Classifier classifier;
   private BorderedText borderedText;
+
+  public String str_model = null;
   /** Input image size of the model along x axis. */
   private int imageSizeX;
   /** Input image size of the model along y axis. */
@@ -85,6 +87,9 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
     rgbFrameBitmap.setPixels(getRgbBytes(), 0, previewWidth, 0, 0, previewWidth, previewHeight);
     final int cropSize = Math.min(previewWidth, previewHeight);
 
+    String str_model = getStr_model();
+    //Toast.makeText(ClassifierActivity.this, str_model, Toast.LENGTH_SHORT).show();
+    // 시작합니다.
     runInBackground(
         new Runnable() {
           @Override
@@ -96,18 +101,42 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
               lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
               LOGGER.v("Detect: %s", results);
 
-              runOnUiThread(
-                  new Runnable() {
-                    @Override
-                    public void run() {
-                      showResultsInBottomSheet(results);
-                      //showFrameInfo(previewWidth + "x" + previewHeight);
-                      //showCropInfo(imageSizeX + "x" + imageSizeY);
-                      //showCameraResolution(cropSize + "x" + cropSize);
-                      //showRotationInfo(String.valueOf(sensorOrientation));
-                      //showInference(lastProcessingTimeMs + "ms");
+              Toast.makeText(ClassifierActivity.this, "str_model", Toast.LENGTH_SHORT).show();
+              switch(str_model)
+              {
+                case "sit":
+                  runOnUiThread(
+                    new Runnable() {
+                      @Override
+                      public void run() {
+                        showResultsInBottomSheet(results);
+                        //showFrameInfo(previewWidth + "x" + previewHeight);//showCropInfo(imageSizeX + "x" + imageSizeY);//showCameraResolution(cropSize + "x" + cropSize);//showRotationInfo(String.valueOf(sensorOrientation));//showInference(lastProcessingTimeMs + "ms");
+                      }
                     }
-                  });
+                  );
+                  break;
+                case "stand":
+                  try {
+                    Thread.sleep(2000);
+                  } catch (InterruptedException e) {
+                    e.printStackTrace();
+                  }
+                  runOnUiThread(
+                    new Runnable() {
+                      @Override
+                      public void run() {
+                        showResultStand(results);
+                        //showFrameInfo(previewWidth + "x" + previewHeight);//showCropInfo(imageSizeX + "x" + imageSizeY);//showCameraResolution(cropSize + "x" + cropSize);//showRotationInfo(String.valueOf(sensorOrientation));//showInference(lastProcessingTimeMs + "ms");
+                      }
+                    }
+                  );
+                  break;
+                case "lay":
+                  break;
+                case "tool":
+                  break;
+                default:
+              }
             }
             readyForNextImage();
           }
