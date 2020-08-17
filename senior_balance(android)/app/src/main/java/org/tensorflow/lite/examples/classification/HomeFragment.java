@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 
@@ -67,10 +68,10 @@ public class HomeFragment extends Fragment {
         View view = (View)inflater.inflate(R.layout.fragment_home, container, false);
         context = getActivity();
 
-        Button button_sit = (Button)view.findViewById(R.id.workout_sit);
-        Button button_stand = (Button)view.findViewById(R.id.workout_stand);
-        Button button_lay = (Button)view.findViewById(R.id.workout_lay);
-        Button button_tool = (Button)view.findViewById(R.id.workout_tool);
+        ImageButton button_sit = (ImageButton)view.findViewById(R.id.workout_sit);
+        ImageButton button_stand = (ImageButton)view.findViewById(R.id.workout_stand);
+        ImageButton button_lay = (ImageButton)view.findViewById(R.id.workout_lay);
+        ImageButton button_tool = (ImageButton)view.findViewById(R.id.workout_tool);
 
         button_sit.setOnClickListener(new View.OnClickListener() {
             @Override
