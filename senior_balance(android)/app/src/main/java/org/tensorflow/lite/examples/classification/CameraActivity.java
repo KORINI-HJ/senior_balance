@@ -106,7 +106,7 @@ public abstract class CameraActivity extends AppCompatActivity
   private int numThreads = -1;
   MediaPlayer mediaPlayer;
 
-  int[] count_media_array = { R.raw.count_1, R.raw.count_2, R.raw.count_3, R.raw.count_4, R.raw.count_5, R.raw.count_6, R.raw.count_7, R.raw.count_8, R.raw.count_9, R.raw.count_10};
+  int[] count_media_array = { R.raw.count_10, R.raw.count_1, R.raw.count_2, R.raw.count_3, R.raw.count_4, R.raw.count_5, R.raw.count_6, R.raw.count_7, R.raw.count_8, R.raw.count_9};
   public String getStr_model()
   {
     return str_model;
@@ -633,15 +633,24 @@ public abstract class CameraActivity extends AppCompatActivity
               {
                   if(state_stand == 1)
                   {
-                    time_count_stand++;
-                    recognitionValueTextView.setText(Integer.toString(time_count_stand) + "초");
-                    speakCount(time_count_stand - 1);
+                      time_count_stand++;
+                      recognitionValueTextView.setText(Integer.toString(time_count_stand) + "초");
+                      speakCount((time_count_stand)%10 );
+                      if(time_count_stand >= 10)
+                      {
+                          mediaPlayer = MediaPlayer.create(this, R.raw.end);
+                          mediaPlayer.start();
+                          state_stand = 0;
+                          time_count_stand = 0;
+                          finish();
+                      }
                   }
                   state_stand = 1;
               }
-              else
-              {
-                  // 똑바로 하세요
+              else if(recognition.getTitle().equals("2 WrongArm") && recognition.getConfidence() > 0.8) {
+                  mediaPlayer = MediaPlayer.create(this, R.raw.arm_up);
+                  mediaPlayer.start();
+                  state_stand = 2;
               }
           }
       }
