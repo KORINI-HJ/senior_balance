@@ -101,7 +101,7 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
               lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
               LOGGER.v("Detect: %s", results);
 
-              Toast.makeText(ClassifierActivity.this, "str_model", Toast.LENGTH_SHORT).show();
+              //Toast.makeText(ClassifierActivity.this, "str_model", Toast.LENGTH_SHORT).show();
               switch(str_model)
               {
                 case "sit":
@@ -117,7 +117,7 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
                   break;
                 case "stand":
                   try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1500);
                   } catch (InterruptedException e) {
                     e.printStackTrace();
                   }
