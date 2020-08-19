@@ -16,6 +16,7 @@
 
 package org.tensorflow.lite.examples.classification;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Typeface;
@@ -90,6 +91,10 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
     String str_model = getStr_model();
     //Toast.makeText(ClassifierActivity.this, str_model, Toast.LENGTH_SHORT).show();
     // 시작합니다.
+
+    Intent intent = new Intent(this, VideoActivity.class);
+    startActivity(intent);
+
     runInBackground(
         new Runnable() {
           @Override
