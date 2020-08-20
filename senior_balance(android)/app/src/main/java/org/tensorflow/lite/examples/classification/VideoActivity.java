@@ -2,6 +2,7 @@ package org.tensorflow.lite.examples.classification;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -18,8 +19,8 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 public class VideoActivity extends AppCompatActivity {
     PlayerView playerView;
     SimpleExoPlayer exoPlayer;
-
     String url;
+    String str_model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class VideoActivity extends AppCompatActivity {
 
         playerView = findViewById(R.id.exo_view);
         url = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+        str_model = getIntent().getExtras().getString("model");
     }
 
     @Override
@@ -54,6 +56,9 @@ public class VideoActivity extends AppCompatActivity {
 
     public void clickFinish(View view)
     {
+        Intent intent = new Intent(this, ClassifierActivity.class);
+        intent.putExtra("model", str_model);
+        startActivity(intent);
         finish();
     }
 }
