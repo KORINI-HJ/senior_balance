@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VideoActivity">
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/exo_view"
+        android:layout_width="match_parent"
+        android:layout_height="700dp">
+    </com.google.android.exoplayer2.ui.PlayerView>
+
+    <com.google.android.exoplayer2.ui.PlayerControlView
+        android:id="@+id/exo_control_view"
+        android:layout_width="match_parent"
+        android:layout_height="700dp"/>
+    
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="종료"
+        android:onClick="clickFinish"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

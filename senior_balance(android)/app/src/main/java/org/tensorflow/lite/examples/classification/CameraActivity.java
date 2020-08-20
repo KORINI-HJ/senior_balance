@@ -122,6 +122,7 @@ public abstract class CameraActivity extends AppCompatActivity
   protected void onCreate(final Bundle savedInstanceState) {
     LOGGER.d("onCreate " + this);
     super.onCreate(null);
+
     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
     setContentView(R.layout.tfe_ic_activity_camera);
@@ -137,6 +138,10 @@ public abstract class CameraActivity extends AppCompatActivity
 
     Intent intent = getIntent();
     str_model = intent.getExtras().getString("model");
+
+    // 시작합니다.
+    MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.start_0);
+    mediaPlayer.start();
 
     switch(str_model)
     {
