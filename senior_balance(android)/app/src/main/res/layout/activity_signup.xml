@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:context=".SignUpActivity">
+
+    ​
+    <TextView
+        android:id="@+id/textView_signUpTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:text="회원가입"
+        android:textColor="@android:color/black"
+        android:textSize="25sp" />
+    ​
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="250dp"
+        android:layout_height="1.2dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/black" />
+    ​
+    <EditText
+        android:id="@+id/editText_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="E-mail"
+        android:inputType="textEmailAddress"
+        android:textColor="@android:color/black" />
+    ​
+    <EditText
+        android:id="@+id/editText_passWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textColor="@android:color/black" />
+    ​
+    <EditText
+        android:id="@+id/editText_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/black" />
+    ​
+
+    <TableRow
+        android:layout_width="210dp"
+        android:layout_gravity="center"
+        android:layout_height="35dp"
+        android:layout_margin="10dp">
+
+        <CheckBox
+            android:id="@+id/checkbox_male"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="남자" />
+
+        <CheckBox
+            android:id="@+id/checkbox_female"
+            android:layout_gravity="center"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:text="여자" />
+    </TableRow>
+
+
+    <DatePicker
+
+        android:id="@+id/BirthDay"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
+
+
+    <TableRow
+        android:layout_width="210dp"
+        android:layout_height="66dp"
+        android:layout_gravity="center">
+
+        <EditText
+            android:id="@+id/height"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="키"
+            android:inputType="number"
+            android:textColor="@android:color/black" />
+
+        <EditText
+            android:id="@+id/weight"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:ems="10"
+            android:hint="몸무게"
+            android:inputType="number"
+            android:textColor="@android:color/black" />
+    </TableRow>
+
+
+    <Button
+        android:id="@+id/btn_join"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/white"
+        android:text="Join"
+        android:textColor="@android:color/black" />
+
+    ​
+</LinearLayout>

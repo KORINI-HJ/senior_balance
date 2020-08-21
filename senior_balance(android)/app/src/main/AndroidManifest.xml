@@ -19,13 +19,15 @@
         android:theme="@style/AppTheme.ImageClassification"
         android:usesCleartextTraffic="true">
         <activity android:name=".VideoActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".LogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".SignUpActivity"/>
         <activity
             android:name=".ClassifierActivity"
             android:label="@string/tfe_ic_app_name"
