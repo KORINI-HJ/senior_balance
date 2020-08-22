@@ -36,6 +36,8 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
     private EditText editTextName;
+    private EditText editTextWeight;
+    private EditText editTextHeight;
 
     private Button buttonJoin;
     private CheckBox Checkfemale;
@@ -43,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
     private String sex;
 
     private String birth;
-    private int heigth,weight;
+    private String height,weight;
     private String[] emailToken;
     private String Name;
 
@@ -59,6 +61,10 @@ public class SignUpActivity extends AppCompatActivity {
         editTextEmail = (EditText) findViewById(R.id.editText_email);
         editTextPassword = (EditText) findViewById(R.id.editText_passWord);
         editTextName = (EditText) findViewById(R.id.editText_name);
+        editTextHeight = (EditText) findViewById(R.id.editText_height);
+        editTextWeight = (EditText) findViewById(R.id.editText_weight);
+
+
         buttonJoin = (Button) findViewById(R.id.btn_join);
         Checkfemale = (CheckBox) findViewById(R.id.checkbox_female);
         Checkmale = (CheckBox) findViewById(R.id.checkbox_male);
@@ -95,6 +101,8 @@ public class SignUpActivity extends AppCompatActivity {
                 if (!editTextEmail.getText().toString().equals("") && !editTextPassword.getText().toString().equals("")&&
                 !editTextName.getText().toString().equals("")) {
                     // 이메일과 비밀번호가 공백이 아닌 경우
+                    weight = editTextWeight.getText().toString();
+                    height = editTextHeight.getText().toString();
                     Name=editTextName.getText().toString();
                     createUser(editTextEmail.getText().toString(), editTextPassword.getText().toString());
                 } else {
@@ -131,18 +139,18 @@ public class SignUpActivity extends AppCompatActivity {
             public String name;
             public String email;
             public String sex;
-            public int weight;
-            public int heigth;
+            public String weight;
+            public String height;
 
-            public User(String birth, String name, String sex, int weight, int heigth) {
+            public User(String birth, String name, String sex, String weight, String height) {
                 //Default Constructor
             }
 
-            public User(String dateOfBirth, String email, String Name, String sex, int weight, int heigth) {
+            public User(String dateOfBirth, String email, String Name, String sex, String weight, String height) {
                 this.date_of_birth = dateOfBirth;
                 this.email = email;
                 this.name = Name;
-                this.heigth = heigth;
+                this.height = height;
                 this.weight = weight;
                 this.sex = sex;
             }
@@ -158,14 +166,16 @@ public class SignUpActivity extends AppCompatActivity {
         private void createUser(final String email, String password ) {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
                         @Override
                         public void onComplete( @NonNull Task<AuthResult> task) {
+
                             emailToken = email.split("@");
-                            Map<String, User> users = new HashMap<>();
-                            users.put(emailToken[0], new User(birth,email,Name,sex,weight,heigth));
+                            Map<String, Object> users = new HashMap<>();
+                            users.put(emailToken[0], new User(birth,email,Name,sex,weight,height));
                             if (task.isSuccessful()) {
                                 // 회원가입 성공시
-                                UserReference.setValue(users);
+                                UserReference.updateChildren(users);
                                 Toast.makeText(SignUpActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
                                 finish();
                             } else {

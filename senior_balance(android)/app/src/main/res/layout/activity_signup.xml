@@ -100,7 +100,7 @@
         android:layout_gravity="center">
 
         <EditText
-            android:id="@+id/height"
+            android:id="@+id/editText_height"
             android:layout_width="105dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -111,7 +111,7 @@
             android:textColor="@android:color/black" />
 
         <EditText
-            android:id="@+id/weight"
+            android:id="@+id/editText_weight"
             android:layout_width="105dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
