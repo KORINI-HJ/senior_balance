@@ -1,3 +1,0 @@
-first commit : this is test, (branch -> Master)
-
-second commit : i changed my branch master to sangeun (branch -> sangeun),2020_08_04

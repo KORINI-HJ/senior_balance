@@ -1,12 +1,22 @@
 package org.tensorflow.lite.examples.classification;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -20,12 +30,23 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mReference;
+    private ChildEventListener mChild;
+
+    private ListView listView;
+    private ArrayAdapter<String> adapter;
+    List<Object> Array = new ArrayList<Object>();
+
+    /////////////////////////////////////////////
+    /////////////Default constructor/////////////
+    /////////////////////////////////////////////
     public ProfileFragment() {
         // Required empty public constructor
+
     }
 
     /**
@@ -59,6 +80,11 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile,null);
+
+        listView = (ListView)view.findViewById(R.id.information);
+        return view;
     }
+
+
 }
