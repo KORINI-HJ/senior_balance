@@ -5,10 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".ReportFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OOO회원님의 운동기록" />
+
+    <!--
+    Graph
+    -->
+
+    <ListView
+        android:id="@+id/workout_data_list"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Fragment Report" />
+    />
 
 </FrameLayout>

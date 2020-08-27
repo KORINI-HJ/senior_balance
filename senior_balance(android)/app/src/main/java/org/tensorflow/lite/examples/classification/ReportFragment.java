@@ -4,9 +4,17 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ListView;
+
+import org.tensorflow.lite.examples.classification.WorkoutData.WorkoutAdapter;
+import org.tensorflow.lite.examples.classification.WorkoutData.WorkoutData;
+
+import java.util.ArrayList;
 
 
 /**
@@ -59,6 +67,31 @@ public class ReportFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_report, container, false);
+        //return inflater.inflate(R.layout.fragment_report, container, false);
+        View view = (View)inflater.inflate(R.layout.fragment_home, container, false);
+        ListView listView = (ListView)view.findViewById(R.id.workout_data_list);
+
+        ArrayList<WorkoutData> data_list = new ArrayList<WorkoutData>();
+        //data_list.add(new WorkoutData(SomeImage, "2020-08-01", "5/5 성공"));
+        // get_data
+        WorkoutAdapter workoutAdapter = new WorkoutAdapter(getActivity(), data_list);
+        listView.setAdapter(workoutAdapter);
+
+        /*
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastitemVisibleFlag) {
+                    Log.e("updated check",Long.toString(lastTime));
+                    read();// 데이터 로드(마지막 element가 보이는경우 )
+                }
+            }
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                lastitemVisibleFlag = (totalItemCount > 0) && (firstVisibleItem + visibleItemCount >= totalItemCount);
+            }
+        });
+         */
+        return view;
     }
 }
