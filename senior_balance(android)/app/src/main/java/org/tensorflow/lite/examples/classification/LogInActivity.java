@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,8 +24,8 @@ public class LogInActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private Button buttonLogIn;
-    private Button buttonSignUp;
+    private ImageButton buttonLogIn;
+    private ImageButton buttonSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class LogInActivity extends AppCompatActivity {
 
         editTextEmail = (EditText) findViewById(R.id.editText_email);
         editTextPassword = (EditText) findViewById(R.id.editText_passWord);
-        buttonSignUp = (Button) findViewById(R.id.btn_signup);
+        buttonSignUp = (ImageButton) findViewById(R.id.btn_signup);
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,7 +46,7 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
-        buttonLogIn = (Button) findViewById(R.id.btn_login);
+        buttonLogIn = (ImageButton) findViewById(R.id.btn_login);
         buttonLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
