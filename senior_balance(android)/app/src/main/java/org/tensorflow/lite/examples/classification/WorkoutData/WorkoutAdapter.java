@@ -53,7 +53,6 @@ public class WorkoutAdapter extends BaseAdapter {
         int exercise = data_list.get(index).getExercise();
         int exerciseImg = icons[exercise];
 
-        Toast.makeText(context, Integer.toString(index) + "_" + Integer.toString(exercise), Toast.LENGTH_SHORT).show();
         imageView.setImageResource(exerciseImg);
         textViewDate.setText(data_list.get(index).getDate());
         textViewOutcome.setText(data_list.get(index).getOutcome());

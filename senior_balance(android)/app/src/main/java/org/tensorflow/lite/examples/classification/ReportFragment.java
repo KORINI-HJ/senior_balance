@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.tensorflow.lite.examples.classification.WorkoutData.WorkoutAdapter;
 import org.tensorflow.lite.examples.classification.WorkoutData.WorkoutData;
@@ -30,6 +34,9 @@ public class ReportFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    //
+    String name;
+    //
 
     ArrayList<WorkoutData> data_list;
     WorkoutAdapter workoutAdapter;
@@ -63,6 +70,15 @@ public class ReportFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
+        if (User!=null) {
+            // User is signed in.
+            name = User.getDisplayName();
+        }
+        else{
+            name = "OOO";
+        }
     }
 
     @Override
@@ -71,6 +87,9 @@ public class ReportFragment extends Fragment {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_report, container, false);
         View view = (View)inflater.inflate(R.layout.fragment_report, null);
+
+        TextView textViewTitle = view.findViewById(R.id.report_title);
+        textViewTitle.setText(name + "님의 운동기록");
 
         data_list = new ArrayList<WorkoutData>();
         data_list.add(new WorkoutData(0, "2020-08-01", "5/10 성공"));
