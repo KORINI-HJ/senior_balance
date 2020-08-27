@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.tensorflow.lite.examples.classification.R;
 
@@ -18,6 +19,7 @@ public class WorkoutAdapter extends BaseAdapter {
     Context context = null;
     LayoutInflater mLayoutInflater = null;
     ArrayList<WorkoutData> data_list;
+    int[] icons = {R.drawable.siticon, R.drawable.standicon, R.drawable.layicon, R.drawable.toolicon};
 
     public WorkoutAdapter(Context _context, ArrayList<WorkoutData> _data_list) {
         this.context = _context;
@@ -27,17 +29,17 @@ public class WorkoutAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return data_list.size();
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public Object getItem(int index) {
+        return data_list.get(index);
     }
 
     @Override
-    public long getItemId(int i) {
-        return 0;
+    public long getItemId(int index) {
+        return index;
     }
 
     @Override
@@ -48,10 +50,13 @@ public class WorkoutAdapter extends BaseAdapter {
         TextView textViewDate = (TextView)view.findViewById(R.id.date);
         TextView textViewOutcome = (TextView)view.findViewById(R.id.outcome);
 
-        Bitmap exerciseImg = data_list.get(index).getImg();
-        imageView.setImageBitmap(exerciseImg);
+        int exercise = data_list.get(index).getExercise();
+        int exerciseImg = icons[exercise];
+
+        Toast.makeText(context, Integer.toString(index) + "_" + Integer.toString(exercise), Toast.LENGTH_SHORT).show();
+        imageView.setImageResource(exerciseImg);
         textViewDate.setText(data_list.get(index).getDate());
-        textViewDate.setText(data_list.get(index).getOutcome());
+        textViewOutcome.setText(data_list.get(index).getOutcome());
 
         return view;
     }
