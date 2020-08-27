@@ -9,20 +9,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-<<<<<<< HEAD
         android:layout_height="match_parent"
         android:orientation= "vertical"
         android:background="@drawable/profile_back"
         android:scaleType="centerInside">
-=======
-        android:layout_height="match_parent"><![CDATA[
-
-        / tools:ignore="MissingConstraints"
-        />
-
-
-
-        ]]>
 
         <TextView
             android:id="@+id/sex_text"
@@ -84,7 +74,6 @@
             app:layout_constraintTop_toBottomOf="@+id/editName_button"
             app:layout_constraintVertical_bias="0.63"
             tools:ignore="MissingConstraints" />
->>>>>>> 5e6b52601751007399b2daf3e411055cf32d9ae7
 
         <TextView
             android:layout_width="60dp"
@@ -126,7 +115,6 @@
             app:layout_constraintVertical_bias="0.659"
             tools:ignore="MissingConstraints" />
 
-<<<<<<< HEAD
         <ImageButton
             android:id="@+id/image_button"
             android:layout_width="50dp"
@@ -139,7 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
-=======
+
         <View
             android:id="@+id/view3"
             android:layout_width="370dp"
@@ -251,7 +239,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
->>>>>>> 5e6b52601751007399b2daf3e411055cf32d9ae7
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"
