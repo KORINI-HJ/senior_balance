@@ -126,7 +126,7 @@ public class ProfileFragment extends Fragment {
                 System.out.println(UserInfoMap.get("name"));
                 name.setText(UserInfoMap.get("name"));
                 birthDay.setText(UserInfoMap.get("date_of_birth"));
-                sex.setText(UserInfoMap.get("sex"));
+                sex.setText(UserInfoMap.get("gender"));
             }
 
             @Override
@@ -134,8 +134,6 @@ public class ProfileFragment extends Fragment {
                 // Getting Post failed, log a message
                 Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
             }
-
-
 
 
         });
