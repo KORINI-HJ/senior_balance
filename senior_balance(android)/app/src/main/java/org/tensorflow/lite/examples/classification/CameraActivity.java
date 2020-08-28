@@ -51,6 +51,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -116,13 +118,15 @@ public abstract class CameraActivity extends AppCompatActivity
 
 
     // record
+    String email;
+
     private int state_stand;
     private int count;
     private int wrong_count;
     private int max_count;
 
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference refRoot = database.getReference();
+    private FirebaseDatabase database;
+    private DatabaseReference refUser;
     //------------------------------
 
     int[] count_media_array = { R.raw.count_10, R.raw.count_1, R.raw.count_2, R.raw.count_3, R.raw.count_4, R.raw.count_5, R.raw.count_6, R.raw.count_7, R.raw.count_8, R.raw.count_9};
@@ -142,6 +146,8 @@ public abstract class CameraActivity extends AppCompatActivity
     {
         LOGGER.d("onCreate " + this);
         super.onCreate(null);
+
+        initializeDB();
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -764,14 +770,23 @@ public abstract class CameraActivity extends AppCompatActivity
 
     public void initializeDB()
     {
+        FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
+        if (User!=null)
+        {
+            email = User.getEmail();
+            email = email.split("@")[0];
+        }
+        else
+            email = "NULL";
+
         database = FirebaseDatabase.getInstance();
-        refRoot = database.getReference();
+        refUser = database.getReference("User/" + email);
     }
 
     public void finishWorkout()
     {
           // record DB
-        DatabaseReference refWorkout = refRoot.child("WorkOut");
+        DatabaseReference refWorkout = refUser.child("WorkOut");
 
         Map<String, Object> workout_list = new HashMap<>();
 

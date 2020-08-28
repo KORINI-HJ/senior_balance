@@ -169,7 +169,6 @@ public class SignUpActivity extends AppCompatActivity {
 
                         @Override
                         public void onComplete( @NonNull Task<AuthResult> task) {
-
                             emailToken = email.split("@");
                             Map<String, Object> users = new HashMap<>();
                             users.put(emailToken[0], new User(birth,email,Name,sex,weight,height));
