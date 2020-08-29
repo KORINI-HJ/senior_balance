@@ -55,7 +55,10 @@ public class WorkoutAdapter extends BaseAdapter {
 
         imageView.setImageResource(exerciseImg);
         textViewDate.setText(data_list.get(index).getDate());
-        textViewOutcome.setText(data_list.get(index).getOutcome());
+
+        double workout_time = data_list.get(index).getCount() * 1.5;
+        String outcome = Double.toString(workout_time) + "초";
+        textViewOutcome.setText(outcome);
 
         return view;
     }
