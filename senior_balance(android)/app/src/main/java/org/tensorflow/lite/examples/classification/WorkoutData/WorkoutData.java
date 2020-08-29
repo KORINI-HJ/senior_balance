@@ -3,13 +3,16 @@ package org.tensorflow.lite.examples.classification.WorkoutData;
 public class WorkoutData {
     private int exercise;
     private String date;
-    private String outcome;
+    public int count;
+    public int wrongCount;
 
-    public WorkoutData(int _exercise, String _date, String _outcome)
+
+    public WorkoutData(int _exercise, String _date, int _count, int _wrongCount)
     {
         this.exercise = _exercise;
         this.date = _date;
-        this.outcome = _outcome;
+        this.count = _count;
+        this.wrongCount = _wrongCount;
     }
 
 
@@ -20,5 +23,7 @@ public class WorkoutData {
         return this.date;
     }
 
-    public String getOutcome() { return this.outcome; }
+    public int getCount() { return this.count; }
+
+    public int getWrongCount() { return this.wrongCount; }
 }
