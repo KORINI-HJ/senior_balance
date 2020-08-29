@@ -55,9 +55,6 @@ public class ReportFragment extends Fragment {
     ArrayList<WorkoutData> data_list;
     WorkoutAdapter workoutAdapter;
     // for graph
-    ArrayList<String> arrayWeekDate= new ArrayList<>();
-    int[] arrayWeekCount = {0, 0, 0, 0, 0, 0, 0};
-    int[] arrayWeekWrongCount = {0, 0, 0, 0, 0, 0, 0};
     //
 
     public ReportFragment() {
@@ -131,6 +128,10 @@ public class ReportFragment extends Fragment {
 
     private void setChart()
     {
+        ArrayList<String> arrayWeekDate= new ArrayList<>();
+        int[] arrayWeekCount = {0, 0, 0, 0, 0, 0, 0};
+        int[] arrayWeekWrongCount = {0, 0, 0, 0, 0, 0, 0};
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
         SimpleDateFormat dateFormatFromDB = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat testingFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
