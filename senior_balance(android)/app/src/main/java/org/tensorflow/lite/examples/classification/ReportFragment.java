@@ -18,6 +18,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -108,15 +109,9 @@ public class ReportFragment extends Fragment {
         textViewTitle.setText(name + "님의 운동기록");
 
         // get_data from DB
-        data_list = new ArrayList<WorkoutData>();
-        data_list.add(new WorkoutData(0, "2020-08-24 20:00:00", 10, 5));
-        data_list.add(new WorkoutData(1, "2020-08-25 23:00:00", 40,7));
-        data_list.add(new WorkoutData(2, "2020-08-29 11:00:00", 30,4));
-        data_list.add(new WorkoutData(3, "2020-08-21 20:55:00", 60,2));
+        get_data_from_DB();
 
         workoutAdapter = new WorkoutAdapter(getActivity(), data_list);
-
-
         lineChart = (LineChart)view.findViewById(R.id.line_chart);
         setChart();
 
@@ -154,28 +149,39 @@ public class ReportFragment extends Fragment {
             }
 
             long day_index = (cal_one.getTimeInMillis() - cal.getTimeInMillis()) / (24*60*60*1000);
-            //Toast.makeText(getContext(), Integer.toString((int)day_index), Toast.LENGTH_SHORT).show();
-            Toast.makeText(getContext(), testingFormat.format(cal_one.getTime()) + "\n" + testingFormat.format(cal.getTime()) + "\n" + Integer.toString((int)day_index), Toast.LENGTH_SHORT).show();
             if(day_index >= 0 && day_index < 7)
             {
                 arrayWeekCount[(int)day_index] += data_list.get(i).getCount();
                 arrayWeekWrongCount[(int)day_index] += data_list.get(i).getWrongCount();
             }
         }
+        //-------------------------------------------------------------------
         List<Entry> countEntries = new ArrayList<>();
+        List<Entry> wrongCountEntries = new ArrayList<>();
         for(int i = 0; i < 7; i++)
         {
             arrayWeekDate.add(dateFormat.format(cal.getTime()));
-            countEntries.add(new Entry(i, arrayWeekCount[i]));
+            countEntries.add(new Entry(i, (int)(arrayWeekCount[i]*1.5)));
+            wrongCountEntries.add(new Entry(i, arrayWeekWrongCount[i]));
             cal.add(Calendar.DATE, 1);
         }
+        //-------------------------------------------------------------------
+        LineDataSet lineCountSet = new LineDataSet(countEntries, "바르게 운동한 시간(초)");
+        LineDataSet lineWrongSet = new LineDataSet(wrongCountEntries, "틀린 시간(초)");
+
+        lineCountSet.setColor(Color.GREEN);
+        lineCountSet.setCircleColor(Color.GREEN);
+        lineWrongSet.setColor(Color.RED);
+        lineWrongSet.setCircleColor(Color.RED);
 
 
-        LineDataSet lineDataSet = new LineDataSet(countEntries, "Count");
-        LineData lineData = new LineData(lineDataSet);
-        lineChart.setData(lineData);
+        LineData chartData = new LineData();
+        chartData.addDataSet(lineCountSet);
+        chartData.addDataSet(lineWrongSet);
+        lineChart.setData(chartData);
 
         XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
@@ -185,12 +191,21 @@ public class ReportFragment extends Fragment {
 
 
         YAxis yAxis = lineChart.getAxisLeft();
-
         YAxis yRAxis = lineChart.getAxisRight();
         yRAxis.setEnabled(false);
 
         lineChart.setDoubleTapToZoomEnabled(false);
         //lineChart.setBackgroundColor(Color.BLACK);
         lineChart.invalidate();
+    }
+
+    private void get_data_from_DB()
+    {
+        data_list = new ArrayList<WorkoutData>();
+        data_list.add(new WorkoutData(0, "2020-08-24 12:30:00", 10, 5));
+        data_list.add(new WorkoutData(0, "2020-08-24 20:00:00", 10, 2));
+        data_list.add(new WorkoutData(1, "2020-08-25 23:00:00", 40,7));
+        data_list.add(new WorkoutData(2, "2020-08-29 11:00:00", 30,4));
+        data_list.add(new WorkoutData(3, "2020-08-21 20:55:00", 60,2));
     }
 }
