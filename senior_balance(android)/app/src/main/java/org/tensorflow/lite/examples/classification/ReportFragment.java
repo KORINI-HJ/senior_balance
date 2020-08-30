@@ -21,6 +21,13 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.database.ValueEventListener;
 
 import org.tensorflow.lite.examples.classification.WorkoutData.WorkoutAdapter;
 import org.tensorflow.lite.examples.classification.WorkoutData.WorkoutData;
@@ -31,7 +38,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -49,7 +58,10 @@ public class ReportFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    View view;
     //
+    private DatabaseReference mDatabase;
+
     String name;
     private LineChart lineChart;
 
@@ -103,21 +115,13 @@ public class ReportFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_report, container, false);
-        View view = (View)inflater.inflate(R.layout.fragment_report, null);
+        view = (View)inflater.inflate(R.layout.fragment_report, null);
 
         TextView textViewTitle = view.findViewById(R.id.report_title);
         textViewTitle.setText(name + "님의 운동기록");
 
         // get_data from DB
         get_data_from_DB();
-
-        workoutAdapter = new WorkoutAdapter(getActivity(), data_list);
-        lineChart = (LineChart)view.findViewById(R.id.line_chart);
-        setChart();
-
-        ListView listView = (ListView)view.findViewById(R.id.workout_data_list);
-        listView.setAdapter(workoutAdapter);
-
         return view;
     }
 
@@ -174,10 +178,9 @@ public class ReportFragment extends Fragment {
         lineWrongSet.setColor(Color.RED);
         lineWrongSet.setCircleColor(Color.RED);
 
-
         LineData chartData = new LineData();
-        chartData.addDataSet(lineCountSet);
         chartData.addDataSet(lineWrongSet);
+        chartData.addDataSet(lineCountSet);
         lineChart.setData(chartData);
 
         XAxis xAxis = lineChart.getXAxis();
@@ -191,6 +194,8 @@ public class ReportFragment extends Fragment {
 
 
         YAxis yAxis = lineChart.getAxisLeft();
+        yAxis.setAxisMinimum(0);
+
         YAxis yRAxis = lineChart.getAxisRight();
         yRAxis.setEnabled(false);
 
@@ -199,13 +204,46 @@ public class ReportFragment extends Fragment {
         lineChart.invalidate();
     }
 
+    private FirebaseDatabase database;
+    private DatabaseReference refUser;
+    String email;
     private void get_data_from_DB()
     {
+        FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
+        if (User!=null)
+        {
+            email = User.getEmail();
+            email = email.split("@")[0];
+        }
+        else
+            email = "NULL";
+
+        database = FirebaseDatabase.getInstance();
+        refUser = database.getReference("User/" + email + "/WorkOut");
+
         data_list = new ArrayList<WorkoutData>();
-        data_list.add(new WorkoutData(0, "2020-08-24 12:30:00", 10, 5));
-        data_list.add(new WorkoutData(0, "2020-08-24 20:00:00", 10, 2));
-        data_list.add(new WorkoutData(1, "2020-08-25 23:00:00", 40,7));
-        data_list.add(new WorkoutData(2, "2020-08-29 11:00:00", 30,4));
-        data_list.add(new WorkoutData(3, "2020-08-21 20:55:00", 60,2));
+        //DatabaseReference refWorkout = refUser.child("WorkOut");
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                for(DataSnapshot child: dataSnapshot.getChildren()){
+                    WorkoutData workoutData = child.getValue(WorkoutData.class);
+                    String value = workoutData.getDate() + "_" + workoutData.getExercise() + "_" + Integer.toString(workoutData.getCount()) + "_" + Integer.toString(workoutData.getWrongCount());
+                    data_list.add(workoutData);
+                    //data_list.add(new WorkoutData(workoutData.getDate(), workoutData.getExercise(), workoutData.count, workoutData.wrongCount));
+                }
+                lineChart = (LineChart)view.findViewById(R.id.line_chart);
+                setChart();
+                workoutAdapter = new WorkoutAdapter(getActivity(), data_list);
+                ListView listView = (ListView)view.findViewById(R.id.workout_data_list);
+                listView.setAdapter(workoutAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        refUser.addValueEventListener(postListener);
     }
 }

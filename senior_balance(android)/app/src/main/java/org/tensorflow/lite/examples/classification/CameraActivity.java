@@ -63,6 +63,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.tensorflow.lite.examples.classification.WorkoutData.WorkoutData;
 import org.tensorflow.lite.examples.classification.env.ImageUtils;
 import org.tensorflow.lite.examples.classification.env.Logger;
 import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;
@@ -787,36 +788,14 @@ public abstract class CameraActivity extends AppCompatActivity
     {
           // record DB
         DatabaseReference refWorkout = refUser.child("WorkOut");
-
         Map<String, Object> workout_list = new HashMap<>();
-
-        String email = "test";
-
 
         SimpleDateFormat time_format = new SimpleDateFormat ( "yyyy-MM-dd_HH:mm:ss");
         Calendar time = Calendar.getInstance();
         String date_time = time_format.format(time.getTime());
-        String exercise = "stand";
-        workout_list.put(date_time + "_" + email + "_" + exercise + "_" + Integer.toString(max_count) + "_" + Integer.toString(wrong_count), new Workout(email, date_time, exercise, max_count, wrong_count));
+        int exercise = 1;
+        workout_list.put(date_time + "_" + exercise + "_" + Integer.toString(max_count) + "_" + Integer.toString(wrong_count), new WorkoutData(date_time, exercise, max_count, wrong_count));
         refWorkout.updateChildren(workout_list);
         finish();
     }
-
-  public static class Workout
-  {
-      public String dateTime;
-      public String email;
-      public String exercise;
-      public int count;
-      public int wrongCount;
-
-      public Workout(String _dateTime, String _email, String _exercise, int _count, int _wrongCount)
-      {
-          this.dateTime = _dateTime;
-          this.exercise = _exercise;
-          this.email = _email;
-          this.count = _count;
-          this.wrongCount = _wrongCount;
-      }
-  }
 }
