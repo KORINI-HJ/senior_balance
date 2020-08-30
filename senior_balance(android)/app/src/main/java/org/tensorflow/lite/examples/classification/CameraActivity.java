@@ -650,7 +650,7 @@ public abstract class CameraActivity extends AppCompatActivity
                     state_stand = 2;
                     wrong_count++;
                 }
-                else if(recognition.getTitle().equals("2 WrongArm") && recognition.getConfidence() > 0.7)
+                else if(recognition.getTitle().equals("3 WrongLeg") && recognition.getConfidence() > 0.7)
                 {
                     mediaPlayer = MediaPlayer.create(this, R.raw.leg_up);
                     mediaPlayer.start();
