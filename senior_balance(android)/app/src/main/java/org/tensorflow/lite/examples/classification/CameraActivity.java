@@ -21,6 +21,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
@@ -50,6 +51,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dinuscxj.progressbar.CircleProgressBar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -94,12 +97,14 @@ public abstract class CameraActivity extends AppCompatActivity
     private LinearLayout bottomSheetLayout;
     private LinearLayout gestureLayout;
     private BottomSheetBehavior<LinearLayout> sheetBehavior;
+    /*
     protected TextView recognitionTextView,
         recognition1TextView,
         recognition2TextView,
         recognitionValueTextView,
         recognition1ValueTextView,
         recognition2ValueTextView;
+     */
     protected TextView frameValueTextView,
         cropValueTextView,
         cameraResolutionTextView,
@@ -129,6 +134,12 @@ public abstract class CameraActivity extends AppCompatActivity
     private FirebaseDatabase database;
     private DatabaseReference refUser;
     //------------------------------
+    private static final String DEFAULT_PATTERN = "%d%%";
+
+    CircleProgressBar circleProgressBar;
+    //------------------------------
+
+
 
     int[] count_media_array = { R.raw.count_10, R.raw.count_1, R.raw.count_2, R.raw.count_3, R.raw.count_4, R.raw.count_5, R.raw.count_6, R.raw.count_7, R.raw.count_8, R.raw.count_9};
     public String getStr_model()
@@ -163,8 +174,8 @@ public abstract class CameraActivity extends AppCompatActivity
             requestPermission();
         }
 
-        recognitionTextView = findViewById(R.id.detected_item);
-        recognitionValueTextView = findViewById(R.id.detected_item_value);
+        //recognitionTextView = findViewById(R.id.detected_item);
+        //recognitionValueTextView = findViewById(R.id.detected_item_value);
 
         Intent intent = getIntent();
         str_model = intent.getExtras().getString("model");
@@ -174,6 +185,18 @@ public abstract class CameraActivity extends AppCompatActivity
         state_stand = 0;
         count = 0;
         wrong_count = 0;
+
+        //
+        circleProgressBar=findViewById(R.id.cpb_circlebar);
+        circleProgressBar.setMax(this.max_count);
+        circleProgressBar.setProgress(0);  // 해당 퍼센트를 적용
+        circleProgressBar.setProgressTextColor(Color.parseColor("#55DDDD"));
+        circleProgressBar.setProgressFormatter((progress, max) -> {
+            final String DEFAULT_PATTERN = "%d/%d";
+            return String.format(DEFAULT_PATTERN, progress, max);
+        });
+
+        //
         // 시작합니다.
         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.start_0);
         mediaPlayer.start();
@@ -618,8 +641,8 @@ public abstract class CameraActivity extends AppCompatActivity
             {
                 if (recognition.getTitle() != null && recognition.getConfidence() != null)
                 {
-                    recognitionTextView.setText(recognition.getTitle() + "\n" + String.format("%.2f", (100 * recognition.getConfidence())) + "%");
-                    recognitionValueTextView.setText(Integer.toString(count) + "초");
+                    //recognitionTextView.setText(recognition.getTitle() + "\n" + String.format("%.2f", (100 * recognition.getConfidence())) + "%");
+                    //recognitionValueTextView.setText(Integer.toString(count) + "초");
                 }
                 if (recognition.getTitle().equals("0 Stand") && recognition.getConfidence() > 0.9)
                 {
@@ -630,7 +653,7 @@ public abstract class CameraActivity extends AppCompatActivity
                     if(state_stand == 1)
                     {
                         count++;
-                        recognitionValueTextView.setText(Integer.toString(count) + "초");
+                        //recognitionValueTextView.setText(Integer.toString(count) + "초");
                         speakCount((count)%10 );
                         if(count >= max_count)
                         {
@@ -661,6 +684,7 @@ public abstract class CameraActivity extends AppCompatActivity
                 {
                     // say something
                 }
+                circleProgressBar.setProgress(count);
             }
         }
     }
