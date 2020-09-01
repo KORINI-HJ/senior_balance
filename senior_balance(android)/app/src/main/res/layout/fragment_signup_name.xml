@@ -51,6 +51,7 @@
             android:textSize="30dp"
             android:ems="10"
             android:hint="이름/별명"
+            android:privateImeOptions="defaultInputmode=korean"
             android:fontFamily="@font/font"
             android:textColor="#ffffff"
             android:inputType="textPersonName"/>

@@ -56,7 +56,8 @@ public class ProfileFragment extends Fragment {
     private TextView birthDay;
     private TextView name;
    // private TextView email;
-    private TextView sex;
+    private TextView gender;
+    private TextView phoneAddr;
 
     private Button name_button;
     private Button birthDay_button;
@@ -101,9 +102,9 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, null);
         name = (TextView)view.findViewById(R.id.name_text);
         birthDay=(TextView)view.findViewById(R.id.birthday_text);
-        sex = (TextView)view.findViewById(R.id.sex_text);
+        gender = (TextView)view.findViewById(R.id.gender_text);
+        phoneAddr = (TextView)view.findViewById(R.id.phoneAddress_text);
         //email = (TextView)view.findViewById(R.id.email);
-
 
         initDatabase();
         checkCurrentUser();
@@ -126,7 +127,8 @@ public class ProfileFragment extends Fragment {
                 System.out.println(UserInfoMap.get("name"));
                 name.setText(UserInfoMap.get("name"));
                 birthDay.setText(UserInfoMap.get("date_of_birth"));
-                sex.setText(UserInfoMap.get("gender"));
+                gender.setText(UserInfoMap.get("gender"));
+                phoneAddr.setText(UserInfoMap.get("phoneAddress"));
             }
 
             @Override
@@ -134,7 +136,6 @@ public class ProfileFragment extends Fragment {
                 // Getting Post failed, log a message
                 Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
             }
-
 
         });
 

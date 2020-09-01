@@ -1,5 +1,7 @@
 package org.tensorflow.lite.examples.classification;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,21 +18,37 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
 public class signUpFragmentBirth extends Fragment {
 
     String title;
     int page;
+//    public static variable Var = new variable();
+    signUpFragmentPhone Phone = new signUpFragmentPhone();
+    signUpFragmentName Name = new signUpFragmentName();
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
+    private FirebaseAuth firebaseAuth;
+
     private CheckBox Checkfemale;
     private CheckBox Checkmale;
-    private String sex;
-    private String birth;
+    String gender;
+    String birth;
     private int mYear =0, mMonth=0, mDay=0;
     private ImageButton button;
+    private String mNmae;
+    private String mPhonAddress;
 
+    private Context context;
+    Activity activity;
 
+    @Override
+    public void onAttach(Context mContext) {
+        super.onAttach(context);
+        context = mContext;
+        if (mContext instanceof Activity) { activity = (Activity) mContext; }
+    }
 
     // newInstance constructor for creating fragment with arguments
     public static signUpFragmentBirth newInstance(int page, String title) {
@@ -46,106 +64,76 @@ public class signUpFragmentBirth extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        page = getArguments().getInt("someInt", 0);
-        title = getArguments().getString("someTitle");
-
+        if(getArguments()!=null){
+            mPhonAddress = getArguments().getString("PhoneAddr");
+            mNmae = getArguments().getString("name");
+        }
     }
-
-
     // Inflate the view for the fragment based on layout XML
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_signup_birth, container, false);
-        Checkfemale = (CheckBox) view.findViewById(R.id.checkbox_female);
-        Checkmale = (CheckBox) view.findViewById(R.id.checkbox_male);
-        button = (ImageButton) view.findViewById(R.id.btn_join);
+        activity = getActivity();
 
-        //////////////////////////
-        /////   Birthday    /////
-        //////////////////////////
-        DatePicker.OnDateChangedListener getmOnDateChangedListener = new DatePicker.OnDateChangedListener() {
-            @Override
-            public void onDateChanged(DatePicker datePicker, int year, int month, int day) {
-
-                mYear = year;
-                mMonth = month;
-                mDay = day;
-                String sYear = Integer.toString(mYear);
-                String sMonth = Integer.toString(mMonth);
-                String sDay = Integer.toString(mDay);
-                birth = sYear+sMonth+sDay;
-            }
-        };
-
-
-        ////////////////////////////////
-        /////   male or female    //////
-        ////////////////////////////////
-        Checkfemale.setOnClickListener(new CheckBox.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                if(((CheckBox) v).isChecked()) {
-                    sex = "여";
-                }
-            }
-        });
-        Checkmale.setOnClickListener(new CheckBox.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                if(((CheckBox) v).isChecked() && sex == "") {
-                    sex = "남";
-                }
-            }
-        });
+        /*
+            생년월일을 선택하고 UserData 의 Birth 에 데이터를 저장합니다.
+        */
 
         DatePicker datePicker = view.findViewById(R.id.datepicker_birthday);
         datePicker.init(mYear, mMonth, mDay,getmOnDateChangedListener);
 
-        ////////////////////////////////////
-        ////////////CreateUser//////////////
-        ////////////////////////////////////
-        DatabaseReference UserReference = databaseReference.child("User");
-        FirebaseAuth firebaseAuth;
 
+        /*
+            성별을 선택합니다.
+        */
 
-
-//        firebaseAuth.createUserWithEmailAndPassword(email, password)
-//                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//
-//                        @Override
-//                        public void onComplete( @NonNull Task<AuthResult> task) {
-//
-//                            emailToken = email.split("@");
-//                            Map<String, Object> users = new HashMap<>();
-//                            users.put(emailToken[0], new SignUpActivity.User(birth,email,Name,sex,weight,height));
-//                            if (task.isSuccessful()) {
-//                                // 회원가입 성공시
-//                                UserReference.updateChildren(users);
-//                                Toast.makeText(SignUpActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-//                                finish();
-//                            } else {
-//                                // 계정이 중복된 경우
-//                                Toast.makeText(SignUpActivity.this, "이미 존재하는 계정입니다.", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-
-
-        ////////////////////////////////
-        /////email, password, name//////
-        ////////////////////////////////
-        button.setOnClickListener(new View.OnClickListener() {
+        Checkfemale = (CheckBox) view.findViewById(R.id.checkbox_female);
+        Checkfemale.setOnClickListener(new CheckBox.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
+            public void onClick(View v){
+                if(((CheckBox) v).isChecked() && gender != "남") {
+                    gender = "여";
+                    UserData.Gender = gender;
+                    Intent intent = new Intent(activity, MakeUserDataActivity.class);
+                    activity.startActivity(intent);
+                    activity.finish();
+                }
+                else { }
             }
+        });
+        Checkmale = (CheckBox) view.findViewById(R.id.checkbox_male);
+        Checkmale.setOnClickListener(new CheckBox.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if(((CheckBox) v).isChecked() && gender != "여") {
+                    gender = "남";
+                    UserData.Gender = gender;
+                    Intent intent = new Intent(activity, MakeUserDataActivity.class);
+                    activity.startActivity(intent);
+                    activity.finish();
+                }
+                else {}
+            }
+
         });
 
         return view;
     }
+
+    DatePicker.OnDateChangedListener getmOnDateChangedListener = new DatePicker.OnDateChangedListener() {
+        @Override
+        public void onDateChanged(DatePicker datePicker, int year, int month, int day) {
+            mYear = year;
+            mMonth = month;
+            mDay = day;
+            String sYear = Integer.toString(mYear);
+            String sMonth = Integer.toString(mMonth);
+            String sDay = Integer.toString(mDay);
+            birth = sYear+sMonth+sDay;
+            UserData.Birth = birth;
+        }
+    };
 
 
 }

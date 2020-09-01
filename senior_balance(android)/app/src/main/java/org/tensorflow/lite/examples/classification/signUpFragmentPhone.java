@@ -14,15 +14,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class signUpFragmentPhone extends Fragment {
 
+
     String title;
     int page;
+    static String PhoneAddress;
     private EditText editPhoneNumber;
-    private String PhonNumber;
 
-    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = firebaseDatabase.getReference();
-
-    // newInstance constructor for creating fragment with arguments
     public static signUpFragmentPhone newInstance(int page, String title) {
         signUpFragmentPhone fragment = new signUpFragmentPhone();
         Bundle args = new Bundle();
@@ -31,8 +28,6 @@ public class signUpFragmentPhone extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-
     // Store instance variables based on arguments passed
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,45 +37,30 @@ public class signUpFragmentPhone extends Fragment {
 
     }
 
-    // Inflate the view for the fragment based on layout XML
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_signup_phonenum, container, false);
 
-//        if(editPhoneNumber.getText().toString()!="") {
-//            PhonNumber = editPhoneNumber.getText().toString();
-//        }
-        ////////////////////////////////////
-        ////////////CreateUser//////////////
-        ////////////////////////////////////
-        DatabaseReference UserReference = databaseReference.child("User");
-        FirebaseAuth firebaseAuth;
+        /*
+            입력받은 사용자의 휴대폰번호정보를 UserData의 PhoneAddr 변수에 저장합니다.
+        */
 
-//        firebaseAuth.createUserWithEmailAndPassword(email, password)
-//                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//
-//                        @Override
-//                        public void onComplete( @NonNull Task<AuthResult> task) {
-//
-//                            emailToken = email.split("@");
-//                            Map<String, Object> users = new HashMap<>();
-//                            users.put(emailToken[0], new SignUpActivity.User(birth,email,Name,sex,weight,height));
-//                            if (task.isSuccessful()) {
-//                                // 회원가입 성공시
-//                                UserReference.updateChildren(users);
-//                                Toast.makeText(SignUpActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-//                                finish();
-//                            } else {
-//                                // 계정이 중복된 경우
-//                                Toast.makeText(SignUpActivity.this, "이미 존재하는 계정입니다.", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
+        editPhoneNumber = (EditText) view.findViewById(R.id.editText_phonenumber);
+        editPhoneNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                if(!hasFocus && editPhoneNumber.getText().toString()!="") {
+                    String subPhoneNum = editPhoneNumber.getText().toString();
+                    UserData.PhoneAddr = subPhoneNum.substring(3, subPhoneNum.length()) + "@token.com";
+                }
+            }
+        });
 
         return view;
     }
-
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 }
