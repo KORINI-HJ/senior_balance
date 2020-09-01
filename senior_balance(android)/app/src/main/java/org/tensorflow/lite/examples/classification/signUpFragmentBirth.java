@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 
@@ -27,7 +28,7 @@ public class signUpFragmentBirth extends Fragment {
     private String sex;
     private String birth;
     private int mYear =0, mMonth=0, mDay=0;
-    private Button button;
+    private ImageButton button;
 
 
 
@@ -59,7 +60,7 @@ public class signUpFragmentBirth extends Fragment {
         View view = inflater.inflate(R.layout.fragment_signup_birth, container, false);
         Checkfemale = (CheckBox) view.findViewById(R.id.checkbox_female);
         Checkmale = (CheckBox) view.findViewById(R.id.checkbox_male);
-        button = (Button) view.findViewById(R.id.btn_join);
+        button = (ImageButton) view.findViewById(R.id.btn_join);
 
         //////////////////////////
         /////   Birthday    /////
