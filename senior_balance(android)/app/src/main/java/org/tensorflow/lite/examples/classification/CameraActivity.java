@@ -650,8 +650,8 @@ public abstract class CameraActivity extends AppCompatActivity
                 }
                 else if (recognition.getTitle().equals("1 Up") && recognition.getConfidence() > 0.7)
                 {
-                    if(state_stand == 1)
-                    {
+                    //if(state_stand == 1)
+                    //{
                         count++;
                         //recognitionValueTextView.setText(Integer.toString(count) + "초");
                         speakCount((count)%10 );
@@ -663,7 +663,7 @@ public abstract class CameraActivity extends AppCompatActivity
                             count = 0;
                             finishWorkout();
                         }
-                    }
+                    //}
                     state_stand = 1;
                 }
                 else if(recognition.getTitle().equals("2 WrongArm") && recognition.getConfidence() > 0.7)
@@ -800,6 +800,7 @@ public abstract class CameraActivity extends AppCompatActivity
         {
             email = User.getEmail();
             email = email.split("@")[0];
+            email = email.substring(3);
         }
         else
             email = "NULL";

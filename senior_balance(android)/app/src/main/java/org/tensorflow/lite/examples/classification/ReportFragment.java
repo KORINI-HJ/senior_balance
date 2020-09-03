@@ -214,6 +214,7 @@ public class ReportFragment extends Fragment {
         {
             email = User.getEmail();
             email = email.split("@")[0];
+            email = email.substring(3);
         }
         else
             email = "NULL";
