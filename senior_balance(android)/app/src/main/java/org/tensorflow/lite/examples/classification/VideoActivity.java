@@ -17,6 +17,8 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.RawResourceDataSource;
 
+import org.tensorflow.lite.examples.classification.tflite.Classifier;
+
 
 public class VideoActivity extends AppCompatActivity {
     PlayerView playerView;
@@ -35,8 +37,22 @@ public class VideoActivity extends AppCompatActivity {
         playerView = findViewById(R.id.exo_view);
         playerControlView = findViewById(R.id.exo_control_view);
         //url = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
-        rawVedieo = R.raw.stand_video;
+
         str_model = getIntent().getExtras().getString("model");
+
+        switch(str_model) {
+            case "sit":
+                rawVedieo = R.raw.sit_video;
+                break;
+            case "stand":
+                rawVedieo = R.raw.stand_video;
+                break;
+            case "lay":
+            case "tool":
+            default:
+                rawVedieo = R.raw.stand_video;
+                break;
+        }
     }
 
     @Override

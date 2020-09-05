@@ -20,8 +20,12 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="종료"
+        android:text="시작하기"
         android:onClick="clickFinish"
+        android:background="@drawable/btn_start"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="bold"
         android:layout_alignParentBottom="true"
         />
 

@@ -232,7 +232,6 @@ public class ReportFragment extends Fragment {
                 }
                 name = UserInfoMap.get("name");
                 textViewTitle.setText(name + "님의 운동기록");
-                Toast.makeText(getContext(), name, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
