@@ -8,26 +8,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#FFB74B">
 
         <TextView
             android:id="@+id/report_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="OOO회원님의 운동기록" />
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:text="OOO님의 운동기록" />
 
-        <!--
-        Graph
-        -->
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/line_chart"
             android:layout_width="match_parent"
             android:layout_height="400dp"
+            android:background="@drawable/rounded"
         />
 
         <ListView
             android:id="@+id/workout_data_list"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
         />
     </LinearLayout>

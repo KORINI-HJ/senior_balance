@@ -3,24 +3,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/rounded">
 
         <ImageView
             android:id="@+id/exercise_img"
             android:layout_width="80dp"
-            android:layout_height="70dp"/>
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+        />
 
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+        />
 
         <TextView
             android:id="@+id/outcome"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+        />
+    </RelativeLayout>
 </LinearLayout>

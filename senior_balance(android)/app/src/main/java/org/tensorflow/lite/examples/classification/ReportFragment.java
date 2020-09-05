@@ -2,7 +2,11 @@ package org.tensorflow.lite.examples.classification;
 
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +63,7 @@ public class ReportFragment extends Fragment {
     private String mParam2;
 
     View view;
+    TextView textViewTitle;
     //
     private DatabaseReference mDatabase;
 
@@ -99,15 +104,6 @@ public class ReportFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
-        if (User!=null) {
-            // User is signed in.
-            name = User.getDisplayName();
-        }
-        else{
-            name = "OOO";
-        }
     }
 
     @Override
@@ -117,9 +113,7 @@ public class ReportFragment extends Fragment {
         //return inflater.inflate(R.layout.fragment_report, container, false);
         view = (View)inflater.inflate(R.layout.fragment_report, null);
 
-        TextView textViewTitle = view.findViewById(R.id.report_title);
-        textViewTitle.setText(name + "님의 운동기록");
-
+        textViewTitle = view.findViewById(R.id.report_title);
         // get_data from DB
         get_data_from_DB();
         return view;
@@ -133,7 +127,6 @@ public class ReportFragment extends Fragment {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
         SimpleDateFormat dateFormatFromDB = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat testingFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -6);
@@ -205,25 +198,51 @@ public class ReportFragment extends Fragment {
     }
 
     private FirebaseDatabase database;
+    private DatabaseReference refUserWorkout;
     private DatabaseReference refUser;
+    String email_origin;
     String email;
     private void get_data_from_DB()
     {
         FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
         if (User!=null)
         {
-            email = User.getEmail();
-            email = email.split("@")[0];
+            email_origin = User.getEmail();
+            email = email_origin.split("@")[0];
             email = email.substring(3);
         }
-        else
+        else {
             email = "NULL";
-
+        }
+        
         database = FirebaseDatabase.getInstance();
-        refUser = database.getReference("User/" + email + "/WorkOut");
+
+        refUser = database.getReference().child("User").child(email_origin.split("@")[0]); // 변경값을 확인할 child 이름
+        refUserWorkout = database.getReference("User/" + email + "/WorkOut");
+
+        refUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                HashMap<String, String> UserInfoMap = new HashMap<String, String>();
+                for(DataSnapshot child : dataSnapshot.getChildren()){
+                    String key = child.getKey();
+                    String value = child.getValue().toString();
+                    UserInfoMap.put(key,value);
+                }
+                name = UserInfoMap.get("name");
+                textViewTitle.setText(name + "님의 운동기록");
+                Toast.makeText(getContext(), name, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
+            }
+        });
 
         data_list = new ArrayList<WorkoutData>();
-        //DatabaseReference refWorkout = refUser.child("WorkOut");
+        //DatabaseReference refWorkout = refUserWorkout.child("WorkOut");
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -245,6 +264,6 @@ public class ReportFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
             }
         };
-        refUser.addValueEventListener(postListener);
+        refUserWorkout.addValueEventListener(postListener);
     }
 }
