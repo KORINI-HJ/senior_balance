@@ -1,3 +1,4 @@
 0 Stand
 1 Up
 2 WrongArm
+3 WrongLeg
