@@ -127,6 +127,8 @@ public abstract class CameraActivity extends AppCompatActivity
     String email;
 
     private int state_stand;
+    private int wrong_state_stand;
+
     private int count;
     private int wrong_count;
     private int max_count;
@@ -183,6 +185,7 @@ public abstract class CameraActivity extends AppCompatActivity
 
         max_count = 10;
         state_stand = 0;
+        wrong_state_stand = 0;
         count = 0;
         wrong_count = 0;
 
@@ -204,7 +207,7 @@ public abstract class CameraActivity extends AppCompatActivity
         switch(str_model)
         {
         case "sit":
-          setModel(Model.valueOf("Float_EfficientNet".toUpperCase()));
+          setModel(Model.valueOf("Float_MobileNet".toUpperCase()));
           break;
         case "stand":
           setModel(Model.valueOf("Float_MobileNet".toUpperCase()));
@@ -678,6 +681,71 @@ public abstract class CameraActivity extends AppCompatActivity
                     mediaPlayer = MediaPlayer.create(this, R.raw.leg_up);
                     mediaPlayer.start();
                     state_stand = 3;
+                    wrong_count++;
+                }
+                else
+                {
+                    // say something
+                }
+                circleProgressBar.setProgress(count);
+            }
+        }
+    }
+
+    @UiThread
+    protected void showResultSit(List<Recognition> results) {
+        if (results != null && results.size() >= 3)
+        {
+            Recognition recognition = results.get(0);
+            if (recognition != null)
+            {
+                if (recognition.getTitle() != null && recognition.getConfidence() != null)
+                {
+                }
+                if (recognition.getTitle().equals("0 Stand") && recognition.getConfidence() > 0.9)
+                {
+                    state_stand = 0;
+                    wrong_state_stand = 0;
+                }
+                else if (recognition.getTitle().equals("1 Up") && recognition.getConfidence() > 0.7)
+                {
+                    if(state_stand == 0)
+                    {
+                        count++;
+                        //recognitionValueTextView.setText(Integer.toString(count) + "초");
+                        speakCount((count)%10 );
+                        if(count >= max_count)
+                        {
+                            mediaPlayer = MediaPlayer.create(this, R.raw.end);
+                            mediaPlayer.start();
+                            state_stand = 0;
+                            count = 0;
+                            finishWorkout();
+                        }
+                        wrong_state_stand = 0;
+                    }
+                    state_stand = 1;
+                }
+                else if(recognition.getTitle().equals("2 WrongArm") && recognition.getConfidence() > 0.6)
+                {
+                    wrong_state_stand++;
+                    if(wrong_state_stand > 3)
+                    {
+                        mediaPlayer = MediaPlayer.create(this, R.raw.arm_up);
+                        mediaPlayer.start();
+                        wrong_state_stand = 0;
+                    }
+                    wrong_count++;
+                }
+                else if(recognition.getTitle().equals("3 WrongLeg") && recognition.getConfidence() > 0.6)
+                {
+                    wrong_state_stand++;
+                    if(wrong_state_stand > 3)
+                    {
+                        mediaPlayer = MediaPlayer.create(this, R.raw.arm_up);
+                        mediaPlayer.start();
+                        wrong_state_stand = 0;
+                    }
                     wrong_count++;
                 }
                 else
