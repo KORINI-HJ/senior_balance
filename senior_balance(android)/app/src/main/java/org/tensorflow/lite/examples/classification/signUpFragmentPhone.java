@@ -8,10 +8,6 @@ import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 public class signUpFragmentPhone extends Fragment {
 
 
@@ -50,9 +46,10 @@ public class signUpFragmentPhone extends Fragment {
         editPhoneNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus)
             {
-                if(!hasFocus && editPhoneNumber.getText().toString()!="") {
+                if(!hasFocus ) {
                     String subPhoneNum = editPhoneNumber.getText().toString();
-                    UserData.PhoneAddr = subPhoneNum.substring(3, subPhoneNum.length()) + "@token.com";
+                    if(editPhoneNumber.getText().toString()!="")
+                        UserData.PhoneAddr = subPhoneNum.substring(3, subPhoneNum.length()) + "@token.com";
                 }
             }
         });

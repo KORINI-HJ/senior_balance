@@ -35,7 +35,7 @@ public class signUpFragmentBirth extends Fragment {
     private CheckBox Checkmale;
     String gender;
     String birth;
-    private int mYear =0, mMonth=0, mDay=0;
+    private int mYear =1960, mMonth=0, mDay=0;
     private ImageButton button;
     private String mNmae;
     private String mPhonAddress;
