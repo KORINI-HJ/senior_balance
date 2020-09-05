@@ -21,6 +21,8 @@ import org.tensorflow.lite.examples.classification.tflite.Classifier;
 
 
 public class VideoActivity extends AppCompatActivity {
+    int video_model_list[] = {R.raw.sit_video, R.raw.sit_video2, R.raw.stand_video, R.raw.stand_video2, R.raw.lay_video, R.raw.lay_video2, R.raw.tool_video, R.raw.tool_video2};
+
     PlayerView playerView;
     PlayerControlView playerControlView;
 
@@ -39,20 +41,30 @@ public class VideoActivity extends AppCompatActivity {
         //url = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
         str_model = getIntent().getExtras().getString("model");
+        int model = 0;
+        int set_number = getIntent().getExtras().getInt("set");
 
-        switch(str_model) {
+        switch(str_model)
+        {
             case "sit":
-                rawVedieo = R.raw.sit_video;
+                model = 0;
                 break;
             case "stand":
-                rawVedieo = R.raw.stand_video;
+                model = 1;
                 break;
             case "lay":
+                model = 2;
+                break;
             case "tool":
-            default:
-                rawVedieo = R.raw.stand_video;
+                model = 3;
                 break;
         }
+
+        int model_number = 2*model + set_number;
+        if(model_number < video_model_list.length)
+            rawVedieo = video_model_list[model_number];
+        else
+            rawVedieo = video_model_list[0];
     }
 
     @Override

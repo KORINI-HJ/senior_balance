@@ -57,8 +57,14 @@ public class HomeFragment extends Fragment {
 
     public void call_pose_training(String str_model){
         // start Video
+        Intent videoIntent2 = new Intent(context, VideoActivity.class);
+        videoIntent2.putExtra("model", str_model);
+        videoIntent2.putExtra("set", 1);
+        startActivity(videoIntent2);
+
         Intent videoIntent = new Intent(context, VideoActivity.class);
         videoIntent.putExtra("model", str_model);
+        videoIntent.putExtra("set", 0);
         startActivity(videoIntent);
     }
 
