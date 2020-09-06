@@ -125,6 +125,7 @@ public abstract class CameraActivity extends AppCompatActivity
 
     // record
     String email;
+    int exercise;
 
     private int state_stand;
     private int wrong_state_stand;
@@ -208,15 +209,19 @@ public abstract class CameraActivity extends AppCompatActivity
         {
         case "sit":
           setModel(Model.valueOf("Float_EfficientNet".toUpperCase()));
+          exercise = 0;
           break;
         case "stand":
           setModel(Model.valueOf("Float_MobileNet".toUpperCase()));
+          exercise = 1;
           break;
         case "lay":
           setModel(Model.valueOf("Quantized_EfficientNet".toUpperCase()));
+          exercise = 2;
           break;
         case "tool":
           setModel(Model.valueOf("Quantized_MobileNet".toUpperCase()));
+          exercise = 3;
           break;
         default:
       }
@@ -726,7 +731,7 @@ public abstract class CameraActivity extends AppCompatActivity
                     }
                     state_stand = 1;
                 }
-                else if(recognition.getTitle().equals("2 WrongArm") && recognition.getConfidence() > 0.6)
+                else if(recognition.getTitle().equals("2 WrongArm") && recognition.getConfidence() > 0.5)
                 {
                     wrong_state_stand++;
                     if(wrong_state_stand > 3)
@@ -879,14 +884,14 @@ public abstract class CameraActivity extends AppCompatActivity
 
     public void finishWorkout()
     {
-          // record DB
+        // record DB
         DatabaseReference refWorkout = refUser.child("WorkOut");
         Map<String, Object> workout_list = new HashMap<>();
 
         SimpleDateFormat time_format = new SimpleDateFormat ( "yyyy-MM-dd_HH:mm:ss");
         Calendar time = Calendar.getInstance();
         String date_time = time_format.format(time.getTime());
-        int exercise = 1;
+
         workout_list.put(date_time + "_" + exercise + "_" + Integer.toString(max_count) + "_" + Integer.toString(wrong_count), new WorkoutData(date_time, exercise, max_count, wrong_count));
         refWorkout.updateChildren(workout_list);
         finish();

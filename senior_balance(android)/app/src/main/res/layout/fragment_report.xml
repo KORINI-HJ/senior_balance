@@ -16,15 +16,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30dp"
+            android:textStyle="bold"
             android:textAlignment="center"
-            android:text="OOO님의 운동기록" />
+            android:text="OOO님의 운동량 변화" />
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/line_chart"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="350dp"
             android:background="@drawable/rounded"
         />
+
+        <TextView
+            android:id="@+id/report_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:text="운동 기록" />
 
         <ListView
             android:id="@+id/workout_data_list"

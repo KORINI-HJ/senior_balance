@@ -231,7 +231,7 @@ public class ReportFragment extends Fragment {
                     UserInfoMap.put(key,value);
                 }
                 name = UserInfoMap.get("name");
-                textViewTitle.setText(name + "님의 운동기록");
+                textViewTitle.setText(name + "님의 운동량 변화");
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -249,7 +249,7 @@ public class ReportFragment extends Fragment {
                 for(DataSnapshot child: dataSnapshot.getChildren()){
                     WorkoutData workoutData = child.getValue(WorkoutData.class);
                     String value = workoutData.getDate() + "_" + workoutData.getExercise() + "_" + Integer.toString(workoutData.getCount()) + "_" + Integer.toString(workoutData.getWrongCount());
-                    data_list.add(workoutData);
+                    data_list.add(0, workoutData);
                     //data_list.add(new WorkoutData(workoutData.getDate(), workoutData.getExercise(), workoutData.count, workoutData.wrongCount));
                 }
                 lineChart = (LineChart)view.findViewById(R.id.line_chart);
