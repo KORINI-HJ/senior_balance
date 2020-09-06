@@ -647,11 +647,11 @@ public abstract class CameraActivity extends AppCompatActivity
                     //recognitionTextView.setText(recognition.getTitle() + "\n" + String.format("%.2f", (100 * recognition.getConfidence())) + "%");
                     //recognitionValueTextView.setText(Integer.toString(count) + "초");
                 }
-                if (recognition.getTitle().equals("0 Stand") && recognition.getConfidence() > 0.9)
+                if (recognition.getTitle().equals("0 Stand") && recognition.getConfidence() > 0.7)
                 {
                     state_stand = 0;
                 }
-                else if (recognition.getTitle().equals("1 Up") && recognition.getConfidence() > 0.7)
+                else if (recognition.getTitle().equals("1 Up") && recognition.getConfidence() > 0.6)
                 {
                     //if(state_stand == 1)
                     //{
@@ -669,14 +669,14 @@ public abstract class CameraActivity extends AppCompatActivity
                     //}
                     state_stand = 1;
                 }
-                else if(recognition.getTitle().equals("2 WrongArm") && recognition.getConfidence() > 0.7)
+                else if(recognition.getTitle().equals("2 WrongArm") && recognition.getConfidence() > 0.6)
                 {
                     mediaPlayer = MediaPlayer.create(this, R.raw.arm_up);
                     mediaPlayer.start();
                     state_stand = 2;
                     wrong_count++;
                 }
-                else if(recognition.getTitle().equals("3 WrongLeg") && recognition.getConfidence() > 0.7)
+                else if(recognition.getTitle().equals("3 WrongLeg") && recognition.getConfidence() > 0.6)
                 {
                     mediaPlayer = MediaPlayer.create(this, R.raw.leg_up);
                     mediaPlayer.start();
