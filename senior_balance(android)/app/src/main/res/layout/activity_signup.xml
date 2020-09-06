@@ -14,7 +14,7 @@
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#FF8000"
+        android:background="#FF6235"
         app:ci_drawable="@drawable/black_radius"
         app:ci_height="7dp"
         app:ci_margin="4dp"

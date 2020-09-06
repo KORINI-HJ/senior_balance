@@ -26,7 +26,7 @@
 
             입력하세요"
             android:textAlignment="center"
-            android:textSize="30dp"
+            android:textSize="40dp"
             android:fontFamily="@font/font"
             android:textColor="#ffffff"/>
 
@@ -35,7 +35,7 @@
 
             android:id="@+id/datepicker_birthday"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="50dp"
             android:layout_weight="3"
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
@@ -43,7 +43,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:weightSum="2"
@@ -68,16 +68,27 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:autoSizeMinTextSize="12sp"
-                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeMinTextSize="20sp"
+                android:autoSizeMaxTextSize="40dp"
                 android:autoSizeStepGranularity="2sp"
                 android:maxLines="1"
                 android:layout_height="match_parent"
                 android:text="여자"
+                android:textSize="40dp"
                 android:fontFamily="@font/font"
                 android:textColor="#ffffff"/>
 
+
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textview3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:text="" />
 
     </LinearLayout>
 </FrameLayout>

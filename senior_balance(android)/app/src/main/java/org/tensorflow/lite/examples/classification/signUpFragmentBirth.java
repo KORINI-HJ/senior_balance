@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -35,10 +35,9 @@ public class signUpFragmentBirth extends Fragment {
     private CheckBox Checkmale;
     String gender;
     String birth;
-    private int mYear =1960, mMonth=0, mDay=0;
+    private int mYear =1960, mMonth=1, mDay=0;
     private ImageButton button;
-    private String mNmae;
-    private String mPhonAddress;
+    private TextView textView;
 
     private Context context;
     Activity activity;
@@ -65,8 +64,7 @@ public class signUpFragmentBirth extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments()!=null){
-            mPhonAddress = getArguments().getString("PhoneAddr");
-            mNmae = getArguments().getString("name");
+
         }
     }
     // Inflate the view for the fragment based on layout XML
@@ -79,15 +77,13 @@ public class signUpFragmentBirth extends Fragment {
         /*
             생년월일을 선택하고 UserData 의 Birth 에 데이터를 저장합니다.
         */
-
         DatePicker datePicker = view.findViewById(R.id.datepicker_birthday);
         datePicker.init(mYear, mMonth, mDay,getmOnDateChangedListener);
-
 
         /*
             성별을 선택합니다.
         */
-
+        textView = (TextView) view.findViewById(R.id.textview3);
         Checkfemale = (CheckBox) view.findViewById(R.id.checkbox_female);
         Checkfemale.setOnClickListener(new CheckBox.OnClickListener(){
             @Override
