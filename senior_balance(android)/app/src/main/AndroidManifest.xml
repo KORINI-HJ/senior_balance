@@ -16,7 +16,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         tools:replace="android:label"
         android:allowBackup="true"
-        android:label="@string/tfe_ic_app_name"
+        android:label="위대한 균형"
         android:icon="@mipmap/ic_grand_balance"
         android:roundIcon="@mipmap/ic_grand_balance"
         android:supportsRtl="true"

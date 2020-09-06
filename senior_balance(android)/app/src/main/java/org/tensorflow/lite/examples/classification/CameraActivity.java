@@ -207,7 +207,7 @@ public abstract class CameraActivity extends AppCompatActivity
         switch(str_model)
         {
         case "sit":
-          setModel(Model.valueOf("Float_MobileNet".toUpperCase()));
+          setModel(Model.valueOf("Float_EfficientNet".toUpperCase()));
           break;
         case "stand":
           setModel(Model.valueOf("Float_MobileNet".toUpperCase()));

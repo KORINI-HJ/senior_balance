@@ -51,12 +51,12 @@ public class ClassifierQuantizedEfficientNet extends Classifier {
     // you can download this file from
     // see build.gradle for where to obtain this file. It should be auto
     // downloaded into assets.
-    return "efficientnet-lite0-int8.tflite";
+    return "lay/model.tflite";
   }
 
   @Override
   protected String getLabelPath() {
-    return "labels_without_background.txt";
+    return "lay/labels.txt";
   }
 
   @Override
